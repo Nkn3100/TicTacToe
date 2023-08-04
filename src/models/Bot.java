@@ -6,15 +6,15 @@ public class Bot extends Player{
     private BotDifficultyLevel botDifficultyLevel;
     private BotPlayingStrategy botPlayingStrategy;
 
-    public Bot(Symbol symbol, String name, Long id, BotDifficultyLevel botDifficultyLevel, BotPlayingStrategy botPlayingStrategy) {
-        super(symbol, name, id, PlayerType.BOT);
+    public Bot(Symbol symbol, String name, BotDifficultyLevel botDifficultyLevel, BotPlayingStrategy botPlayingStrategy) {
+        super(symbol, name, PlayerType.BOT);
         this.botDifficultyLevel = botDifficultyLevel;
         this.botPlayingStrategy = botPlayingStrategy;
     }
 
     @Override
     public Move makeMove(Board board) {
-        Move move = botPlayingStrategy.makeMove(board);
+        Move move = botPlayingStrategy.makeMove(this, board);
         move.setPlayer(this);
         return move;
     }

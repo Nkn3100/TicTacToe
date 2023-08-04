@@ -19,10 +19,42 @@ public class Game {
     private int nextPlayerIndex;
     private List<WinningStrategy> winningStrategies;
 
+    public static Builder builder(){
+        return new Builder();
+    }
+
+    public List<Player> getPlayers() {
+        return players;
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public List<Move> getMoves() {
+        return moves;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public GameState getGameState() {
+        return gameState;
+    }
+
+    public int getNextPlayerIndex() {
+        return nextPlayerIndex;
+    }
+
+    public List<WinningStrategy> getWinningStrategies() {
+        return winningStrategies;
+    }
+
     private Game(List<Player> players, Board board, List<WinningStrategy> winningStrategies) {
         this.players = players;
         this.board = board;
-        this.moves = new ArrayList<Move>();
+        this.moves = new ArrayList<>();
         this.gameState = GameState.IN_PROGRESS;
         this.nextPlayerIndex = 0;
         this.winningStrategies = winningStrategies;
@@ -32,26 +64,25 @@ public class Game {
         private List<WinningStrategy> winningStrategies;
         private int dimension;
 
-        private static Builder builder(){
-            return new Builder();
-        }
-
         public Builder() {
-            this.players = new ArrayList<Player>();
-            this.winningStrategies = new ArrayList<WinningStrategy>();
+            this.players = new ArrayList<>();
+            this.winningStrategies = new ArrayList<>();
             this.dimension = 0;
         }
 
-        public void setPlayers(List<Player> players) {
+        public Builder setPlayers(List<Player> players) {
             this.players = players;
+            return this;
         }
 
-        public void setWinningStrategies(List<WinningStrategy> winningStrategies) {
+        public Builder setWinningStrategies(List<WinningStrategy> winningStrategies) {
             this.winningStrategies = winningStrategies;
+            return this;
         }
 
-        public void setDimension(int dimension) {
+        public Builder setDimension(int dimension) {
             this.dimension = dimension;
+            return this;
         }
         public void addPlayer(Player player){
             players.add(player);
@@ -96,7 +127,7 @@ public class Game {
             validateNumberOfPlayers();
             validateUniqueSymbolForAllPlayers();
         }
-        private Game build(){
+        public Game build(){
             validate();
             return new Game(players, new Board(dimension), winningStrategies);
         }
